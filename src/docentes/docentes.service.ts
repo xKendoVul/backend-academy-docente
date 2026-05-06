@@ -11,18 +11,16 @@ export class DocentesService {
   ) { }
 
   async create(dto: CreateDocenteDto) {
-    const nuevoDocente = this.DocenteRepo.create({
-      nombres: dto.nombres,
-      apellidos: dto.apellidos,
-      email: dto.email,
-      direccion: dto.direccion,
-      cedula: dto.cedula,
-      telefono: dto.telefono,
-      etnia_id: dto.etnia_id,
-      cargo_id: dto.cargo_id,
-      sexo_id: dto.sexo_id
-    })
-    return await this.DocenteRepo.save(nuevoDocente)
+    try {
+      const docente = this.DocenteRepo.create(dto);
+      const saved = await this.DocenteRepo.save(docente);
+      return await this.DocenteRepo.findOne({
+        where: { id: saved.id },
+        relations: ['sexo', 'etnia', 'cargo']
+      });
+    } catch (error) {
+      console.log(error)
+    }
   }
 
   async findAll() {

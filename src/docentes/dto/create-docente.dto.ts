@@ -44,4 +44,44 @@ export class CreateDocenteDto {
 
 }
 
-export class UpdateDocenteDto extends CreateDocenteDto { }
+export class UpdateDocenteDto {
+  @IsNumber()
+  @IsOptional()
+  id?: number;
+
+  @IsString()
+  @IsOptional()
+  nombres?: string;
+
+  @IsString()
+  @IsOptional()
+  apellidos?: string;
+
+  @IsString()
+  @IsOptional()
+  email?: string;
+
+  @IsString()
+  @IsOptional()
+  direccion?: string;
+
+  @IsString()
+  @IsOptional()
+  cedula?: string;
+
+  @IsString()
+  @IsOptional()
+  telefono?: string;
+
+  @IsNumber()
+  @IsOptional()
+  etnia_id?: number
+
+  @IsNumber()
+  @IsOptional()
+  cargo_id?: number
+
+  @IsNumber()
+  @IsOptional()
+  sexo_id?: number
+}

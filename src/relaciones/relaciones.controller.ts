@@ -1,0 +1,75 @@
+import { Controller } from '@nestjs/common';
+import { RelacionesService } from './relaciones.service';
+import { CreateSexoDto, CreateEtniaDto, CreateCargoDto } from './create-relaciones.dto';
+import { MessagePattern, Payload } from '@nestjs/microservices';
+
+@Controller('docentes/sexo')
+export class SexoController {
+  constructor(private readonly relacionesService: RelacionesService) { }
+
+  @MessagePattern({ cmd: "crear_sexo" })
+  async createSexo(@Payload() sexoDto: CreateSexoDto) {
+    const sexo = await this.relacionesService.createSexo(sexoDto)
+
+    const datos = {
+      data: sexo,
+      message: "Registro agregado con exito"
+    }
+    return datos
+  }
+
+  @MessagePattern({ cmd: "encontrar_sexos" })
+  async findAllSexos() {
+    const data = await this.relacionesService.findAllSexos()
+    return data
+  }
+
+}
+
+// -----------------------------------
+
+@Controller("docentes/etnia")
+export class EtniaController {
+  constructor(private readonly relacionesService: RelacionesService) { }
+
+  @MessagePattern({ cmd: "crear_etnia" })
+  async create(@Payload() etniaDto: CreateEtniaDto) {
+    const etnia = await this.relacionesService.createEtnia(etniaDto)
+
+    const datos = {
+      data: etnia,
+      message: "Registro agregado con exito"
+    }
+    return datos
+  }
+
+  @MessagePattern({ cmd: "encontrar_etnias" })
+  async findAll() {
+    const data = await this.relacionesService.findAllEtnias()
+    return data
+  }
+
+}
+
+@Controller("docentes/cargo")
+export class CargoController {
+  constructor(private readonly relacionesService: RelacionesService) { }
+
+  @MessagePattern({ cmd: "crear_cargo" })
+  async create(@Payload() cargoDto: CreateCargoDto) {
+    const cargo = await this.relacionesService.createCargo(cargoDto)
+
+    const datos = {
+      data: cargo,
+      message: "Registro agregado con exito"
+    }
+    return datos
+  }
+
+  @MessagePattern({ cmd: "encontrar_cargos" })
+  async findAll() {
+    const data = await this.relacionesService.findAllCargos()
+    return data
+  }
+
+}
